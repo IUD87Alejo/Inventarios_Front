@@ -8,7 +8,7 @@ export const EstadoView = () => {
   const { estadosId = ''} = useParams();
   const [ estados, setEstados ] = useState([]);
   const [ valoresForm, setValoresForm ] = useState({});
-  const { nombre = '', estado = '' } = valoresForm;
+  const { id = '',nombre = '', estado = '' } = valoresForm;
 
   const obtenerEstado = async ({_id}) => {
     console.log('obtenerTipo');
@@ -21,7 +21,7 @@ export const EstadoView = () => {
         Swal.showLoading();
         const { data } = await getEstado(_id);
         console.log(data);
-        //setEstados(data);
+        setValoresForm({ id: data._id, nombre: data.nombre, estado: data.estado });
         Swal.close();
     } catch (error) {
         console.log(error);
@@ -58,7 +58,14 @@ export const EstadoView = () => {
 
   const handleCrearEstado = (e) => {
     e.preventDefault();
-    nuevoEstado(valoresForm);
+    console.log(valoresForm);
+    if(valoresForm.id === undefined){
+      console.log('si');
+      nuevoEstado(valoresForm);
+    }else{
+      console.log('no');
+      editarEstado(valoresForm.id, valoresForm);
+    }
   }
 
   const nuevoEstado = async (estadoE) =>{
@@ -67,6 +74,17 @@ export const EstadoView = () => {
       console.log(resp.data);
       listarEstados();
       setValoresForm({ nombre: '', estado: '' });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const editarEstado = async (id ,tipo) =>{
+    try {
+      const resp = await editEstado(id ,tipo);
+      console.log(resp.data);
+      listarEstados();
+      setValoresForm({ id:'', nombre: '', estado: '' });
     } catch (error) {
       console.log(error);
     }

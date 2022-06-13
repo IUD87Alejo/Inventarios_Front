@@ -8,7 +8,7 @@ export const MarcaView = () => {
   const { marcaId = ''} = useParams();
   const [ marcas, setMarcas ] = useState([]);
   const [ valoresForm, setValoresForm ] = useState({});
-  const { nombre = '', estado = '' } = valoresForm;
+  const {  id = '',nombre = '', estado = '' } = valoresForm;
 
   const obtenerMarca = async ({_id}) => {
     console.log('obtenerMarca');
@@ -21,7 +21,7 @@ export const MarcaView = () => {
         Swal.showLoading();
         const { data } = await getMarca(_id);
         console.log(data);
-        //setMarcas(data);
+        setValoresForm({ id: data._id, nombre: data.nombre, estado: data.estado });
         Swal.close();
     } catch (error) {
         console.log(error);
@@ -58,7 +58,14 @@ export const MarcaView = () => {
 
   const handleCrearMarca = (e) => {
     e.preventDefault();
-    nuevaMarca(valoresForm);
+    console.log(valoresForm);
+    if(valoresForm.id === undefined){
+      console.log('si');
+      nuevaMarca(valoresForm);
+    }else{
+      console.log('no');
+      editarMarca(valoresForm.id, valoresForm);
+    }
   }
 
   const nuevaMarca = async (marca) =>{
@@ -67,6 +74,17 @@ export const MarcaView = () => {
       console.log(resp.data);
       listarMarcas();
       setValoresForm({ nombre: '', estado: '' });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const editarMarca = async (id ,tipo) =>{
+    try {
+      const resp = await editMarca(id ,tipo);
+      console.log(resp.data);
+      listarMarcas();
+      setValoresForm({ id:'', nombre: '', estado: '' });
     } catch (error) {
       console.log(error);
     }

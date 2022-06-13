@@ -8,7 +8,7 @@ export const TipoView = () => {
   const { tiposId = ''} = useParams();
   const [ tipos, setTipos ] = useState([]);
   const [ valoresForm, setValoresForm ] = useState({});
-  const { nombre = '', estado = '' } = valoresForm;
+  const { id = '', nombre = '', estado = '' } = valoresForm;
 
   const obtenerTipo = async ({_id}) => {
     console.log('obtenerTipo');
@@ -21,7 +21,7 @@ export const TipoView = () => {
         Swal.showLoading();
         const { data } = await getTipo(_id);
         console.log(data);
-        //setTipos(data);
+        setValoresForm({ id: data._id, nombre: data.nombre, estado: data.estado });
         Swal.close();
     } catch (error) {
         console.log(error);
@@ -58,7 +58,15 @@ export const TipoView = () => {
 
   const handleCrearTipo = (e) => {
     e.preventDefault();
-    nuevoTipo(valoresForm);
+    console.log(valoresForm);
+    if(valoresForm.id === undefined){
+      console.log('si');
+      nuevoTipo(valoresForm);
+    }else{
+      console.log('no');
+      editarTipo(valoresForm.id, valoresForm);
+    }
+    
   }
 
   const nuevoTipo = async (tipo) =>{
@@ -66,7 +74,18 @@ export const TipoView = () => {
       const resp = await crearTipo(tipo);
       console.log(resp.data);
       listarTipos();
-      setValoresForm({ nombre: '', estado: '' });
+      setValoresForm({ id:'', nombre: '', estado: '' });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const editarTipo = async (id ,tipo) =>{
+    try {
+      const resp = await editTipo(id ,tipo);
+      console.log(resp.data);
+      listarTipos();
+      setValoresForm({ id:'', nombre: '', estado: '' });
     } catch (error) {
       console.log(error);
     }
