@@ -5,9 +5,3 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-
-
-let port = process.env.PORT;
-if(port === null || port === "") {
-    port = 3000;
-}
