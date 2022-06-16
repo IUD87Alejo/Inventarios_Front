@@ -21,7 +21,7 @@ const App = () => {
     return <Router>
         <Header/>
         <Switch>
-            <Route exact path='/' component={ InventarioView }/>
+            <Route exact path='/index' component={ InventarioView }/>
             <Route exact path='/usuarios' component={ UsuarioView }/>
             <Route exact path='/marcas' component={ MarcaView }/>
             <Route exact path='/marcas/:marcaId' component={ MarcaView }/>
@@ -29,7 +29,7 @@ const App = () => {
             <Route exact path='/tipos' component={ TipoView }/>
             {/* <Route exact path='/inventarios/edit/:id/:serial' component={ inventarioUpdate }/> */}
             <Route exact path='/inventarios/edit/:inventarioId' component={ inventarioUpdate }/>
-            <Redirect to='/' />
+            <Redirect to='/index' />
         </Switch>
     </Router>
 }
