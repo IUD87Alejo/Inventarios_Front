@@ -103,12 +103,12 @@ export const TipoView = () => {
           <div className='row'>
             <div className='col-md-8'>
               <label className="form-label">Nombre</label>
-              <input name="nombre" value={nombre} type="text" id="disabledTextInput"
+              <input name="nombre" value={nombre} type="text" id="disabledTextInput" required
               className="form-control" placeholder="Ingrese un nombre" onChange={(e) => handleOnChange(e)}/>
             </div>
             <div className='col-md-4'>
               <label className="form-label">Estado</label>
-              <select name="estado" value={estado} className="form-select" onChange={(e) => handleOnChange(e)}>
+              <select name="estado" value={estado} className="form-select" required onChange={(e) => handleOnChange(e)}>
                 <option defaultValue>Seleccione una opción</option>
                 <option value="Activo">Activo</option>
                 <option value="Inactivo">Inactivo</option>
